@@ -23,6 +23,7 @@ class Entry extends React.Component{
                 <div className = "EntryName">Item: {this.state.entryName}</div>
                 <div className = "PersonUsed">Users: {this.state.personUsed}</div>
                 <div className = "Amount">Amount: ${this.state.amount}</div>
+                <div className = "Owned By">Who Paid? {this.state.personPaid}</div>
                 <button onClick = {this.handleRemove}>X</button>
             </div>
         )
