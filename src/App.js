@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Entry from './Entry';
 import PersonalTranscation from './PersonalTranscation';
+import * as Parse from "./ParseString"; 
 
 class Person{
   constructor(data, name){
@@ -116,6 +117,7 @@ class App extends React.Component{
         },
       ],
       finaStatement: [],
+      textEntry: "",
     }
 
     //Adding unique keys to the objects
@@ -124,9 +126,20 @@ class App extends React.Component{
     this.removeData = this.removeData.bind(this); 
     this.test = this.test.bind(this);
     this.updateFinaStatement = this.updateFinaStatement.bind(this);
+    this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.test(); 
   }
+
+  handleTextAreaChange(ev) { this.setState(
+    {textEntry: ev.target.value}
+  )}
+
+  handleSubmit() {
+    Parse.ParseString(this.state.textEntry);
+  }
+
 
   test(){
     let testPerson = new Person(this.state.data, "Rex");
@@ -164,6 +177,8 @@ class App extends React.Component{
     //console.log(this.state.data);
     return(
       <div className = "app">
+        <textarea value = {this.state.value} onChange = {this.handleTextAreaChange}></textarea>
+        <button onClick = {this.handleSubmit}>Submit</button>
         <div className = "TransactionList">
           {this.getListFromData(this.data)}
         </div>
