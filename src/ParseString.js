@@ -1,6 +1,8 @@
 export function ParseString(x){
     let i = 0; 
     let line = 0; 
+    let data = [];
+    let key = 0;
 
     while (i < x.length) {
         //Enter here every newline
@@ -10,6 +12,7 @@ export function ParseString(x){
             transactionName: "",
             amount: "",
             personPaid: "",
+            key: undefined, 
         }
 
         let expecting = "amount";
@@ -68,12 +71,15 @@ export function ParseString(x){
         line++; 
         
         currentObject.transactionName = transactionName; 
+        currentObject.key = key; 
+        key++;
 
-        console.log(currentObject); 
+        data.push(currentObject);
         
         i++;
     }
-
+    console.log(data);
+    return data;
 
     // while(i < x.length){
 

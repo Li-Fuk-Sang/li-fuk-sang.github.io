@@ -86,37 +86,8 @@ class App extends React.Component{
     this.keyCount = 0; 
     this.personList = ["Fox", "Tommy", "Rex"];
     this.state = {
-      data: [
-        {
-          name: "Apple",
-          amount: 12,
-          owner: "Fox",
-          user: ["Tommy", "Rex", "Jacky"],
-          key: 1,
-        },
-        {
-          name: "Taxi",
-          amount: 31.2,
-          owner: "Tommy",
-          user: ["Tommy", "Rex"],
-          key: 2,
-        },
-        {
-          name: "Cleaner",
-          amount: 21,
-          owner: "Rex",
-          user: ["Fox", "Rex"],
-          key: 3,
-        },
-        {
-          name: "Water Bill",
-          amount: 219.4,
-          owner: "Fox",
-          user: ["Stardust", "Rex"],
-          key: 4,
-        },
-      ],
-      finaStatement: [],
+      data: [],
+      finaStatement: [],    //?
       textEntry: "",
     }
 
@@ -137,7 +108,12 @@ class App extends React.Component{
   )}
 
   handleSubmit() {
-    Parse.ParseString(this.state.textEntry);
+    let temp; 
+    temp = Parse.ParseString(this.state.textEntry); 
+    //Parse.ParseString(this.state.textEntry);
+    this.setState(
+        {data: temp}
+    );
   }
 
 
@@ -146,10 +122,11 @@ class App extends React.Component{
     testPerson.debug();
   }
 
-  getListFromData(data){
+  //TODO
+  getListFromData(){
     let list = this.state.data.map((data)=>{
       this.keyCount++;
-      return(<Entry name = {data.name} amount = {data.amount} owner = {data.owner} user = {data.user} key = {data.key} numKey = {data.key} removeData = {this.removeData}/>)
+      return(<Entry name = {data.transactionName} amount = {data.amount} owner = {data.personPaid} user = {"data.user"} key = {data.key} numKey = {data.key} removeData = {this.removeData}/>)
     })
     return list; 
   }
