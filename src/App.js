@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Entry from './Entry';
-import PersonalTranscation from './PersonalTranscation';
+import PersonalTranscations from './PersonalTranscation';
 import * as Parse from "./ParseString"; 
 
 class Person{
@@ -86,6 +86,7 @@ class App extends React.Component{
     this.keyCount = 0; 
     this.personList = ["Fox", "Tommy", "Rex"];
     this.state = {
+      personList : ["Fox", "Tommy", "Rex", "Stardust", "Jacky", "Kin", "Arnold"],     //To be gathered from parse string later
       data: [],
       finaStatement: [],    //?
       textEntry: "",
@@ -99,6 +100,7 @@ class App extends React.Component{
     this.updateFinaStatement = this.updateFinaStatement.bind(this);
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fromTransactionsToStatement = this.fromTransactionsToStatement.bind(this);
 
     this.test(); 
   }
@@ -114,6 +116,7 @@ class App extends React.Component{
     this.setState(
         {data: temp}
     );
+    console.log(temp);
   }
 
 
@@ -126,16 +129,62 @@ class App extends React.Component{
   getListFromData(){
     let list = this.state.data.map((data)=>{
       this.keyCount++;
-      return(<Entry name = {data.transactionName} amount = {data.amount} owner = {data.personPaid} user = {"data.user"} key = {data.key} numKey = {data.key} removeData = {this.removeData}/>)
+      return(<Entry transactionName = {data.transactionName} amount = {data.amount} personPaid = {data.personPaid} user = {"data.user"} key = {data.key} numKey = {data.key} removeData = {this.removeData}/>)
     })
     return list; 
   }
 
   updateFinaStatement(){
-    let list = this.personList.map((name)=>{
-      return(<PersonalTranscation personObj = {new Person(this.state.data, name)} />); 
-    })
-    this.setState({finaStatement: list}); 
+    let finaStatements = this.fromTransactionsToStatement();
+    this.setState({finaStatement: <PersonalTranscations statements = {finaStatements}></PersonalTranscations>});
+  }
+
+  /**
+   * Generate personalized statements from the list of transactions in the state
+   * @returns an array of objects representing the transaction record of a person
+   */
+  fromTransactionsToStatement(){
+    // {
+    //   transactionName: "",
+    //   amount: "",
+    //   personPaid: "",
+    //   personsUsedItem: [],
+    //   key: undefined, 
+    // }
+    let statementArray = []; 
+
+    for(let person of this.state.personList)
+    {
+      let statement = {
+        personName: person,
+        records: [],
+      }
+      statement.personName = person;    //Strings in personArray
+      for(let data of this.state.data){
+        if(data.personPaid === person){    //Validity of person to be enforced later
+          statement.records.push(
+            {
+              transactionName: data.transactionName,
+              amount: data.amount,
+              type: "Paid For"
+            }
+          )
+        }
+        if(data.personsUsedItem.includes(person)){
+          statement.records.push(
+            {
+              transactionName: data.transactionName,
+              amount: -(data.amount/data.personsUsedItem.length),
+              type: "Used"
+            }
+          )
+        }
+      }
+
+      statementArray.push(statement);
+    }
+    console.log(statementArray);
+    return statementArray;
   }
 
   /**
@@ -154,7 +203,7 @@ class App extends React.Component{
     //console.log(this.state.data);
     return(
       <div className = "app">
-        <textarea value = {this.state.value} onChange = {this.handleTextAreaChange}></textarea>
+        <textarea value = {this.state.textEntry} onChange = {this.handleTextAreaChange}></textarea>
         <button onClick = {this.handleSubmit}>Submit</button>
         <div className = "TransactionList">
           {this.getListFromData(this.data)}

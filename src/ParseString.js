@@ -12,12 +12,13 @@ export function ParseString(x){
             transactionName: "",
             amount: "",
             personPaid: "",
+            personsUsedItem: [],
             key: undefined, 
         }
 
         let expecting = "amount";
 
-        while (x[i] !== '\n') {
+        while (x[i] !== '\n' && i < x.length) {
             let char = x[i];
 
             //Encountered number, where i is the beginning index of the number
@@ -25,7 +26,6 @@ export function ParseString(x){
                 //Go forward to check whether it is a "price"
                 let amountResult = is_amount(x, i);
                 if (amountResult !== false) {
-                    //Amount identified TODO
                     //Not expecting amount: 
                     if (expecting !== "amount") {
                         alert("Line " + line + ": Expected '" + expecting + "' While received amount");

@@ -4,9 +4,9 @@ class Entry extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            entryName: props.name,
-            amount: props.amount,
-            personPaid: props.owner,
+            transactionName: props.transactionName,     //Done
+            amount: props.amount,                       //Done
+            personPaid: props.personPaid,               //Done
             personUsed: props.user,      
         }
         this.handleRemove = this.handleRemove.bind(this);
@@ -20,7 +20,7 @@ class Entry extends React.Component{
     render(){
         return(
             <div className = "Entry" owner = {this.state.personPaid}>
-                <div className = "EntryName">Item: {this.state.entryName}</div>
+                <div className = "EntryName">Item: {this.state.transactionName}</div>
                 <div className = "PersonUsed">Users: {this.state.personUsed}</div>
                 <div className = "Amount">Amount: ${this.state.amount}</div>
                 <div className = "Owned By">Who Paid? {this.state.personPaid}</div>
