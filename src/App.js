@@ -6,80 +6,80 @@ import Entry from './Entry';
 import PersonalTranscations from './PersonalTranscation';
 import * as Parse from "./ParseString"; 
 
-class Person{
-  constructor(data, name){
-    this.name = name; 
-    this.finaStatement = [];
-    this.balance = 0;
+// class Person{
+//   constructor(data, name){
+//     this.name = name; 
+//     this.finaStatement = [];
+//     this.balance = 0;
 
-    //Initalize person class with given data
-    //Calculate balance as well
-    this.addArrTransaction(data);
-  }
+//     //Initalize person class with given data
+//     //Calculate balance as well
+//     this.addArrTransaction(data);
+//   }
 
-  calculateBalance(){
-    this.balance = 0; 
-    for(let i = 0; i < this.finaStatement.length; i++){
-      if(this.finaStatement[i] === 'A'){
-        this.balance += this.finaStatement[i].amount;
-      }
-      else{
-        this.balance -= this.finaStatement[i].amount;
-      }
-    }
-  }
+//   calculateBalance(){
+//     this.balance = 0; 
+//     for(let i = 0; i < this.finaStatement.length; i++){
+//       if(this.finaStatement[i] === 'A'){
+//         this.balance += this.finaStatement[i].amount;
+//       }
+//       else{
+//         this.balance -= this.finaStatement[i].amount;
+//       }
+//     }
+//   }
 
-  addArrTransaction(data){
-    for(let i = 0; i < data.length; i++){
-      if(data[i].owner === this.name){
-        this.finaStatement.push({
-          transactionName: data[i].name,
-          amount: data[i].amount,
-          type: "A",
-        })
-      }
-      //Check user 0
-      if(data[i].user.includes(this.name)){
-        this.finaStatement.push({
-          transactionName: data[i].name,
-          amount: data[i].amount/data[i].user.length,
-          type: "L",
-        })
-      }
-    }
-    this.calculateBalance();
-  }
+//   addArrTransaction(data){
+//     for(let i = 0; i < data.length; i++){
+//       if(data[i].owner === this.name){
+//         this.finaStatement.push({
+//           transactionName: data[i].name,
+//           amount: data[i].amount,
+//           type: "A",
+//         })
+//       }
+//       //Check user 0
+//       if(data[i].user.includes(this.name)){
+//         this.finaStatement.push({
+//           transactionName: data[i].name,
+//           amount: data[i].amount/data[i].user.length,
+//           type: "L",
+//         })
+//       }
+//     }
+//     this.calculateBalance();
+//   }
 
-  addOneTransaction(data){
-    if(data.owner === this.name){
-      this.finaStatement.push({
-        transactionName: data.name,
-        amount: data.amount,
-        type: "A",
-      })
-    }
-    //Check user 0
-    if(data.user.includes(this.name)){
-      this.finaStatement.push({
-        transactionName: data.name,
-        amount: data.amount/data.user.length,
-        type: "L",
-      })
-    }
-  }
+//   addOneTransaction(data){
+//     if(data.owner === this.name){
+//       this.finaStatement.push({
+//         transactionName: data.name,
+//         amount: data.amount,
+//         type: "A",
+//       })
+//     }
+//     //Check user 0
+//     if(data.user.includes(this.name)){
+//       this.finaStatement.push({
+//         transactionName: data.name,
+//         amount: data.amount/data.user.length,
+//         type: "L",
+//       })
+//     }
+//   }
 
-  debug(){
-    console.log("Name: " + this.name);
-    console.log("Balance: " + this.balance);
-    console.log("Financial Statement");
-    for(let i = 0; i < this.finaStatement.length; i++){
-      console.log("==Transaction " + i + "==");
-      console.log("Transaction Name: " + this.finaStatement[i].transactionName); 
-      console.log("Transaction Amount: " + this.finaStatement[i].amount);
-    }
-  }
+//   debug(){
+//     console.log("Name: " + this.name);
+//     console.log("Balance: " + this.balance);
+//     console.log("Financial Statement");
+//     for(let i = 0; i < this.finaStatement.length; i++){
+//       console.log("==Transaction " + i + "==");
+//       console.log("Transaction Name: " + this.finaStatement[i].transactionName); 
+//       console.log("Transaction Amount: " + this.finaStatement[i].amount);
+//     }
+//   }
 
-}
+// }
 
 class App extends React.Component{
 
@@ -98,14 +98,11 @@ class App extends React.Component{
 
     this.getListFromData = this.getEntriesFromParseString.bind(this);
     this.removeData = this.removeData.bind(this); 
-    this.test = this.test.bind(this);
     this.updateFinaStatement = this.updateFinaStatement.bind(this);
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fromTransactionsToStatement = this.fromTransactionsToStatement.bind(this);
     this.removePersonUsed = this.removePersonUsed.bind(this);
-
-    this.test(); 
   }
 
   handleTextAreaChange(ev) { this.setState(
@@ -118,22 +115,15 @@ class App extends React.Component{
     if (temp === false){
       return;
     }
-    for(let entry of temp){
-      entry.personsUsedItem = this.state.personList;
-    }
+    // for(let entry of temp){
+    //   entry.personsUsedItem = this.state.personList;
+    // }
     //Parse.ParseString(this.state.textEntry);
     this.setState(
         {data: temp}
     );
     console.log(temp);
   }
-
-
-  test(){
-    let testPerson = new Person(this.state.data, "Rex");
-    testPerson.debug();
-  }
-
 
   getEntriesFromParseString(){
     let entryNum = 0; 

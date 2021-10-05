@@ -113,6 +113,23 @@ export function ParseString(x, personArray){
         
 
         currentObject.transactionName = transactionName.trim(); 
+
+        //Modifying personsUsedItem depending on the content in the transactionName.
+        let transactionNameCaps = currentObject.transactionName.toUpperCase(); 
+        let containsName = false; 
+
+        for(let validName of personArray){
+            if (transactionNameCaps.includes(validName.toUpperCase())){
+                containsName = true;
+                currentObject.personsUsedItem.push(validName);
+            }
+        }
+
+        if(containsName === false){
+            currentObject.personsUsedItem = personArray;
+        }
+
+        
         currentObject.key = key; 
         key++;
 
@@ -190,7 +207,7 @@ export function ParseString(x, personArray){
  */
 
 export function is_number(i){
-    return(i === '0' || i === '1' || i === '2' || i === '3' || i === '4' || i === '5' || i === '6' || i === '7' || i === '8' || i === '9' || i === ".");
+    return(i === '0' || i === '1' || i === '2' || i === '3' || i === '4' || i === '5' || i === '6' || i === '7' || i === '8' || i === '9' || i === "." || i === "$");
 }
 
 // APPLE   341  (Tommy)
