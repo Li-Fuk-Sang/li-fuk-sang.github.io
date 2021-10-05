@@ -1,0 +1,71 @@
+.TransactionEntry {
+    background-color: rgb(238, 238, 238);
+    padding-left: 10px;
+    margin: 10px;
+    border-left: 5px solid rgb(71, 151, 255);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.TransactionEntry:nth-child(2n){
+    background-color: rgb(204, 204, 204);
+}
+
+.UpperBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+}
+
+.EntryName {
+    margin-top: 5px;
+    color: rgb(165, 165, 165);
+}
+
+.EntryName > a{
+    font-size: 1.3em;
+    font-weight: 500;
+    color: black;
+}
+
+.OwnedBy {
+    font-size: 0.8em;
+    font-style: italic;
+    color: rgb(165, 165, 165);
+}
+
+.OwnedBy > a {
+    font-weight: 400;
+    font-style: unset;
+    color: black;
+}
+
+.AmountAndDelete {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Amount {
+    display: inline-block;
+    width: 75px;
+    
+    color: rgb(95, 95, 95);
+}
+
+.Amount > a {
+    color: black;    
+    font-size: 1.4em;
+    margin-left: 3px;
+}
+
+.IndividualTransaction {
+    margin: 10px 0px;
+}
+
+.IndividualTransaction>.PersonName {
+    font-size: 1.5em;
+}

@@ -1,15 +1,17 @@
 import React from "react";
+import Nametag from "./Nametag";
 
 class Entry extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            transactionName: props.transactionName,     //Done
-            amount: props.amount,                       //Done
-            personPaid: props.personPaid,               //Done
-            personUsed: props.user,      
+            transactionName: props.data.transactionName,     //Done
+            amount: props.data.amount,                       //Done
+            personPaid: props.data.personPaid,               //Done
+            personUsed: props.data.personsUsedItem,      
         }
         this.handleRemove = this.handleRemove.bind(this);
+        this.removeUser = this.removeUser.bind(this);
     }
 
     handleRemove() {
@@ -17,14 +19,37 @@ class Entry extends React.Component{
         this.props.removeData(this.props.numKey);
     }
 
+    removeUser(personName){
+        console.log("Key is: " +  this.props.numKey);
+        this.props.removePersonUsed(this.props.numKey, personName);
+    }
+
     render(){
         return(
-            <div className = "Entry" owner = {this.state.personPaid}>
-                <div className = "EntryName">Item: {this.state.transactionName}</div>
-                <div className = "PersonUsed">Users: {this.state.personUsed}</div>
-                <div className = "Amount">Amount: ${this.state.amount}</div>
-                <div className = "Owned By">Who Paid? {this.state.personPaid}</div>
-                <button onClick = {this.handleRemove}>X</button>
+            <div className = "TransactionEntry" owner = {this.state.personPaid}>
+                <div className = "UpperBox">
+                    <div className = "TitleAndOwner">
+                        <div className = "EntryName">Item {this.props.entryNum}: <a>{this.state.transactionName}</a></div>
+                        <div className = "OwnedBy">Paid By: <a>{this.state.personPaid}</a></div>
+                    </div>
+                    <div className = "PersonUsed">
+                    {
+                        this.props.data.personsUsedItem.map((user)=>{
+                            return (
+                                <Nametag personName = {user} remove = {this.removeUser}/>
+                            )
+                        })
+                    }
+                    </div>
+
+                </div>
+                
+                
+                <div className = "AmountAndDelete">
+                        <div className = "Amount">$<a>{this.state.amount}</a>  </div>
+                        <button onClick = {this.handleRemove}>X</button>
+                </div>
+               
             </div>
         )
     }

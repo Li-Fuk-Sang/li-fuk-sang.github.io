@@ -1,0 +1,89 @@
+
+.Record {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Record[transactionsign = 'negative']{
+    background-color: rgba(255, 0, 0, 0.364);
+}
+
+.Record[transactionsign = 'negative']:nth-child(2n){
+    background-color: rgba(255, 0, 0, 0.207);
+}
+
+.Record[transactionsign = 'positive']{
+    background-color: rgba(0, 255, 98, 0.364);
+}
+
+.Record[transactionsign = 'positive']:nth-child(2n){
+    background-color: rgba(0, 255, 98, 0.22);
+}
+
+
+.RecordNameAndShare {
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+}
+
+.SharedWith {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 220px;
+
+    font-size: 0.7em;
+    font-style: italic;
+    color: rgb(94, 94, 94);
+}
+
+.SharedWith > a {
+    font-style: normal;
+    font-weight: 800;
+}
+
+.RecordTransactionName {
+    padding-left: 10px;
+    /* padding-top: 2px;
+    padding-bottom: 2px; */
+}
+
+.RecordAmountAndCross {
+    width: 60px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+}
+
+.Total {
+    display: flex;
+    flex-direction: row;
+    justify-content:right;
+    align-items:baseline;
+
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+.Total > .TotalAmount{
+    font-size: 1.7em;
+    margin-left: 15px;
+}
+
+.Total > .TotalDescription > a {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+/* .Record:nth-child(2n){
+    background-color: rgb(240, 240, 240);
+} */

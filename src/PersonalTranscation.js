@@ -41,7 +41,7 @@ class PersonalTranscations extends React.Component{
     }
 
     render(){
-        let statementList = this.state.statements.map((statement)=> {
+        let statementList = this.props.statements.map((statement)=> {
             return(
             <IndividualTransaction personName = {statement.personName} records = {statement.records}></IndividualTransaction>
             )

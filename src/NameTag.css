@@ -1,0 +1,21 @@
+.PersonUsed {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.NameTag {
+    background-color: rgb(255, 255, 255);
+    margin: 0px 3px;
+    border-radius: 3px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.NameTag > button {
+    border-style: none;
+    background-color: rgba(109, 63, 63, 0)
+}

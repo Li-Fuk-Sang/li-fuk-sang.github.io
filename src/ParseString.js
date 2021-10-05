@@ -1,11 +1,32 @@
-export function ParseString(x){
+
+/**
+ * Parse string from typeArea and returns an object as follows:
+ * 
+ * 
+ * @param {string} x Captured from the typeArea
+ * @param {*} personArray An array of all valid person name
+ * @returns false if the string passed is not valid, array of object otherwise
+ */
+
+export function ParseString(x, personArray){
     let i = 0; 
     let line = 0; 
     let data = [];
     let key = 0;
+    let personListCheck = personArray.map((person)=> {
+        return person.toUpperCase(); 
+    } )
+    //console.log(personListCheck);
+
 
     while (i < x.length) {
         //Enter here every newline
+        if(x[i] === '\n'){
+            console.log("Empty Line on line " + line);
+            i++;
+            line++;
+            continue;
+        }
         
         let transactionName = '';
         let currentObject = {
@@ -28,8 +49,8 @@ export function ParseString(x){
                 if (amountResult !== false) {
                     //Not expecting amount: 
                     if (expecting !== "amount") {
-                        alert("Line " + line + ": Expected '" + expecting + "' While received amount");
-                        return;
+                        alert("Line " + line + " (" + transactionName + ") : Expected '" + expecting + "' While received amount");
+                        return false;
                     }
                     
                     currentObject.amount = parseFloat(amountResult);
@@ -39,21 +60,26 @@ export function ParseString(x){
                 }
             }
             //Encountered a player's name
-            if (char === "(") {
+            if (char === "(" || char === "（") {
                 let playerResult = is_playerName(x, i);
                 if (playerResult === false) {
                     //Throw error;
-                    console.log("PLAYER ERROR!")
+                    alert("Line " + line + " (" + transactionName + ") : Invalid Name format encountered after '('");
                     return;
                 }
                 else {
-                    //Player identified TODO
+                    //Player identified
+                    //If not expecting player
                     if (expecting !== "player") {
-                        alert("Line " + line + ": Expected '" + expecting + "' While received name of person who paid");
-                        return;
+                        alert("Line " + line + " (" + transactionName + ") : Expected '" + expecting + "' While received name of person who paid");
+                        return false;
                     }
-                    
-                    //TODO
+
+                    //If expecting player
+                    if(!personListCheck.includes(playerResult.toUpperCase())){
+                        alert("Line " + line + " (" + transactionName + ") : Encountered Unidentified Person: '" + playerResult + "'");
+                        return false;
+                    }
                     currentObject.personPaid = playerResult; 
                     i += (playerResult.length + 2);
                     expecting = "newline";
@@ -68,9 +94,25 @@ export function ParseString(x){
             i++;
         }
         //Encountered newline symbol
+
+        if (expecting === "amount"){
+            alert("Line " + line + " (" + transactionName + ") : Has no transaction amount");
+            return false;
+        }
+
+        if (expecting === "player"){
+            alert("Line " + line + " (" + transactionName + ") : Has no name of person paid. Please make sure the payer's name is wrapped in brackets. E.g. (John)");
+            return false;
+        }
+
+        if(transactionName === ""){
+            alert("Line " + line + ": Has no transaction name")
+        }
+
         line++; 
         
-        currentObject.transactionName = transactionName; 
+
+        currentObject.transactionName = transactionName.trim(); 
         currentObject.key = key; 
         key++;
 
@@ -78,7 +120,7 @@ export function ParseString(x){
         
         i++;
     }
-    console.log(data);
+    //console.log(data);
     return data;
 
     // while(i < x.length){
@@ -140,6 +182,13 @@ export function ParseString(x){
     // }
 }
 
+/**
+ * Identify whether the character passed is a number
+ * 
+ * @param {char} i character to be checked 
+ * @returns whether the character is a number or a decimal point
+ */
+
 export function is_number(i){
     return(i === '0' || i === '1' || i === '2' || i === '3' || i === '4' || i === '5' || i === '6' || i === '7' || i === '8' || i === '9' || i === ".");
 }
@@ -153,7 +202,7 @@ export function is_number(i){
  * @returns Player String is a player is identified, false if otherwise
  */
 export function is_playerName(x, i){
-    if(x[i] !== "("){
+    if(x[i] !== "(" && x[i] !== "（"){
         return false; 
     }
     i++;
@@ -163,11 +212,11 @@ export function is_playerName(x, i){
         if(char === " "){
             i++;
         }
-        else if(char === ")"){
+        else if(char === ")" || char === "）"){
             //PlayerName is terminated with )
             return playerName;
         }
-        else if(char === "("){
+        else if(char === "(" || char === "（"){
             //Duplicated (
             return false;
         }
@@ -211,7 +260,7 @@ export function is_amount(x, i){
                         j++;
                         continue;
                     }
-                    else if(x[j] === "("){
+                    else if(x[j] === "(" || x[j] === "（"){
                         //Spacebar until (
                         return amount; 
                     }
@@ -227,7 +276,7 @@ export function is_amount(x, i){
                 
             }
             else{
-                if(char === "("){
+                if(char === "(" || char === "（"){
                     //Spacebar until (
                     return amount; 
                 }

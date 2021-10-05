@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import './NameTag.css';
+import './Individual.css';
 import Entry from './Entry';
 import PersonalTranscations from './PersonalTranscation';
 import * as Parse from "./ParseString"; 
@@ -83,7 +85,7 @@ class App extends React.Component{
 
   constructor(props){
     super(props);
-    this.keyCount = 0; 
+    this.keyCount = 0;  //Redun?
     this.personList = ["Fox", "Tommy", "Rex"];
     this.state = {
       personList : ["Fox", "Tommy", "Rex", "Stardust", "Jacky", "Kin", "Arnold"],     //To be gathered from parse string later
@@ -94,13 +96,14 @@ class App extends React.Component{
 
     //Adding unique keys to the objects
 
-    this.getListFromData = this.getListFromData.bind(this);
+    this.getListFromData = this.getEntriesFromParseString.bind(this);
     this.removeData = this.removeData.bind(this); 
     this.test = this.test.bind(this);
     this.updateFinaStatement = this.updateFinaStatement.bind(this);
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fromTransactionsToStatement = this.fromTransactionsToStatement.bind(this);
+    this.removePersonUsed = this.removePersonUsed.bind(this);
 
     this.test(); 
   }
@@ -111,7 +114,13 @@ class App extends React.Component{
 
   handleSubmit() {
     let temp; 
-    temp = Parse.ParseString(this.state.textEntry); 
+    temp = Parse.ParseString(this.state.textEntry, this.state.personList); 
+    if (temp === false){
+      return;
+    }
+    for(let entry of temp){
+      entry.personsUsedItem = this.state.personList;
+    }
     //Parse.ParseString(this.state.textEntry);
     this.setState(
         {data: temp}
@@ -125,17 +134,20 @@ class App extends React.Component{
     testPerson.debug();
   }
 
-  //TODO
-  getListFromData(){
+
+  getEntriesFromParseString(){
+    let entryNum = 0; 
     let list = this.state.data.map((data)=>{
-      this.keyCount++;
-      return(<Entry transactionName = {data.transactionName} amount = {data.amount} personPaid = {data.personPaid} user = {"data.user"} key = {data.key} numKey = {data.key} removeData = {this.removeData}/>)
+      //this.keyCount++;
+      entryNum++; 
+      return(<Entry data = {data} key = {data.key} numKey = {data.key} entryNum = {entryNum} removeData = {this.removeData} removePersonUsed = {this.removePersonUsed}/>)
     })
     return list; 
   }
 
   updateFinaStatement(){
     let finaStatements = this.fromTransactionsToStatement();
+    console.log(finaStatements)
     this.setState({finaStatement: <PersonalTranscations statements = {finaStatements}></PersonalTranscations>});
   }
 
@@ -161,12 +173,13 @@ class App extends React.Component{
       }
       statement.personName = person;    //Strings in personArray
       for(let data of this.state.data){
-        if(data.personPaid === person){    //Validity of person to be enforced later
+        if(data.personPaid.toUpperCase() === person.toUpperCase()){    //Validity of person to be enforced later
           statement.records.push(
             {
               transactionName: data.transactionName,
               amount: data.amount,
-              type: "Paid For"
+              type: "paidFor",
+              sharedWith: undefined,
             }
           )
         }
@@ -175,7 +188,8 @@ class App extends React.Component{
             {
               transactionName: data.transactionName,
               amount: -(data.amount/data.personsUsedItem.length),
-              type: "Used"
+              type: "used",
+              sharedWith: data.personsUsedItem.length, 
             }
           )
         }
@@ -183,7 +197,7 @@ class App extends React.Component{
 
       statementArray.push(statement);
     }
-    console.log(statementArray);
+    //console.log(statementArray);
     return statementArray;
   }
 
@@ -199,6 +213,48 @@ class App extends React.Component{
     })
   }
 
+  /**
+   * Removes a person from the User List of an entry
+   * @param {num} key 
+   * @param {String} personName 
+   */
+  removePersonUsed(key, personName){
+    //console.log("Got personName: " + personName); 
+    this.setState(
+      function(state) {
+        let temp = state.data;
+        //console.log(state.data);
+        for (let data of temp){
+          //Find the Entry to be modified
+          //console.log(data);
+          if(data.key === key){
+            //Located entry to be modified
+            //Now find the person to be removed
+            for(let i = 0; i < data.personsUsedItem.length; i++){
+              //console.log(data.personsUsedItem[i]);
+              if(data.personsUsedItem[i] === personName){
+                let tempArr = [];
+                for(let j = 0; j < data.personsUsedItem.length; j++){
+                  if(j != i){
+                    tempArr.push(data.personsUsedItem[j]);
+                  }
+                }
+                data.personsUsedItem = tempArr; 
+                //console.log(temp);
+                return {
+                  data: temp
+                }; 
+              }
+            }
+            //alert("ERROR: This person does not exist in the data PersonUsedItem Array")
+          }
+        }
+        //alert("ERROR: The entry with the specified key does not exist")
+      }
+    )
+        
+  }
+
   render(){
     //console.log(this.state.data);
     return(
@@ -206,7 +262,7 @@ class App extends React.Component{
         <textarea value = {this.state.textEntry} onChange = {this.handleTextAreaChange}></textarea>
         <button onClick = {this.handleSubmit}>Submit</button>
         <div className = "TransactionList">
-          {this.getListFromData(this.data)}
+          {this.getEntriesFromParseString(this.data)}
         </div>
         <button onClick = {this.updateFinaStatement}>UPDATE</button>
         <div className = "FinaStatements">
