@@ -22,7 +22,7 @@ export function ParseString(x, personArray){
     while (i < x.length) {
         //Enter here every newline
         if(x[i] === '\n'){
-            console.log("Empty Line on line " + line);
+            //console.log("Empty Line on line " + line);
             i++;
             line++;
             continue;

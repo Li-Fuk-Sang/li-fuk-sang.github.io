@@ -47,8 +47,8 @@ class Entry extends React.Component{
             <div className = "transaction-entry" owner = {this.state.personPaid}>
                 <div className = "UpperBox">
                     <div className = "TitleAndOwner">
-                        <div className = "EntryName">Item {this.props.entryNum}: <a>{this.state.transactionName}</a></div>
-                        <div className = "OwnedBy">Paid By: <a>{this.state.personPaid}</a></div>
+                        <div className = "EntryName">Item {this.props.entryNum}: <span>{this.state.transactionName}</span></div>
+                        <div className = "OwnedBy">Paid By: <span>{this.state.personPaid}</span></div>
                     </div>
                     <div className = "PersonUsed">
                     {
@@ -72,7 +72,7 @@ class Entry extends React.Component{
                 
                 
                 <div className = "AmountAndDelete">
-                        <div className = "Amount">$<a>{this.state.amount}</a>  </div>
+                        <div className = "Amount">$<span>{this.state.amount}</span>  </div>
                         <button onClick = {this.handleRemove}>X</button>
                 </div>
                

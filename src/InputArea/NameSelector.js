@@ -39,7 +39,7 @@ class NameSelector extends React.Component{
     }
 
     handleEnterKey(e){
-        if(e.keyCode == 13){
+        if(e.keyCode === 13){
             e.preventDefault(); 
             this.handlePersonAdd(); 
         }

@@ -4,7 +4,7 @@ function Total(props){
     if(props.total >= 0){
         return(
             <div className = "Total">
-                <div className = "TotalDescription">Should <a>Receive: </a></div>
+                <div className = "TotalDescription">Should <span>Receive: </span></div>
                 <div className = "TotalAmount">{props.total}</div>
             </div>
         )
@@ -12,7 +12,7 @@ function Total(props){
     else{
         return(
             <div className = "Total">
-                <div className = "TotalDescription">Should <a>Pay: </a></div>
+                <div className = "TotalDescription">Should <span>Pay: </span></div>
                 <div className = "TotalAmount">{-props.total}</div>
             </div>
         )

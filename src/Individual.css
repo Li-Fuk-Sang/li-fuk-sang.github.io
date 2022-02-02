@@ -47,7 +47,7 @@
     color: rgb(94, 94, 94);
 }
 
-.SharedWith > a {
+.SharedWith > span {
     font-style: normal;
     font-weight: 800;
 }
@@ -80,7 +80,7 @@
     margin-left: 15px;
 }
 
-.Total > .TotalDescription > a {
+.Total > .TotalDescription > span {
     text-transform: uppercase;
     font-weight: 700;
 }

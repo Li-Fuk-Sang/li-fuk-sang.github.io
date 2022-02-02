@@ -3,10 +3,6 @@ import NameSelector from "./NameSelector";
 
 class InputArea extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return(
             <div className = "MainTextAreaDiv">

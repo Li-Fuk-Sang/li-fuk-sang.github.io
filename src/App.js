@@ -98,7 +98,7 @@ class App extends React.Component{
 
   updateFinaStatement(){
     let finaStatements = this.fromTransactionsToStatement();
-    console.log(finaStatements)
+    //console.log(finaStatements)
     this.setState({finaStatement: <PersonalTranscations statements = {finaStatements}></PersonalTranscations>});
   }
 
@@ -183,7 +183,7 @@ class App extends React.Component{
               if(data.personsUsedItem[i] === personName){
                 let tempArr = [];
                 for(let j = 0; j < data.personsUsedItem.length; j++){
-                  if(j != i){
+                  if(j !== i){
                     tempArr.push(data.personsUsedItem[j]);
                   }
                 }

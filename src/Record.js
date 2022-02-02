@@ -11,9 +11,6 @@ import React from "react";
  */
 
 class Record extends React.Component{
-    constructor(props){
-        super(props);
-    }
 
     // componentDidMount(){
     //     this.props.deltaTotal(this.props.record.amount);
@@ -28,7 +25,7 @@ class Record extends React.Component{
     render(){
         if(this.props.record.type === "paidFor"){
             return(
-                <div className = "Record" transactionSign = "positive">
+                <div className = "Record" transactionsign = "positive">
                     <div className = "RecordNameAndShare">
                         <div className = "RecordTransactionName">{this.props.record.transactionName}</div>
                     </div>
@@ -45,8 +42,8 @@ class Record extends React.Component{
                     <div className = "RecordNameAndShare">
                         <div className = "RecordTransactionName">{this.props.record.transactionName}</div>
                         <div className = "SharedWith">
-                            <div>Original: <a>{Math.round(this.props.record.amount*this.props.record.sharedWith)}</a></div>
-                            <div>Shared with <a>{this.props.record.sharedWith - 1}</a> other people</div>
+                            <div>Original: <span>{Math.round(this.props.record.amount*this.props.record.sharedWith)}</span></div>
+                            <div>Shared with <span>{this.props.record.sharedWith - 1}</span> other people</div>
                         </div>
                     </div>
                     <div className = "RecordAmountAndCross">
