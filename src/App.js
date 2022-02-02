@@ -22,10 +22,12 @@ class App extends React.Component{
       data: [],
       finaStatement: [],    //?
       textEntry: "",
+      ignorePerson: [],
     }
 
     //Adding unique keys to the objects
     this.updatePersonList = this.updatePersonList.bind(this); 
+    this.updateIgnorePerson = this.updateIgnorePerson.bind(this); 
     this.getListFromData = this.getEntriesFromParseString.bind(this);
     this.removeData = this.removeData.bind(this); 
     this.updateFinaStatement = this.updateFinaStatement.bind(this);
@@ -47,9 +49,14 @@ class App extends React.Component{
    * @param {List} newPersonList 
    */
   updatePersonList(newPersonList) {
-    console.log(newPersonList);
     this.setState(
       {personList: newPersonList}
+    );
+  }
+
+  updateIgnorePerson(ignorePersonList){
+    this.setState(
+      {ignorePerson: ignorePersonList}
     );
   }
 
@@ -74,7 +81,17 @@ class App extends React.Component{
     let list = this.state.data.map((data)=>{
       //this.keyCount++;
       entryNum++; 
-      return(<Entry data = {data} key = {data.key} validPersonList = {this.state.personList} numKey = {data.key} entryNum = {entryNum} removeData = {this.removeData} removePersonUsed = {this.removePersonUsed} addPersonUsed = {this.addPersonUsed}/>)
+      return(<Entry 
+        data = {data} 
+        key = {data.key} 
+        validPersonList = {this.state.personList} 
+        numKey = {data.key} 
+        entryNum = {entryNum} 
+        ignorePerson = {this.state.ignorePerson}
+        removeData = {this.removeData} 
+        removePersonUsed = {this.removePersonUsed} 
+        addPersonUsed = {this.addPersonUsed}
+        />)
     })
     return list; 
   }
@@ -221,6 +238,7 @@ class App extends React.Component{
           handleSubmit = {this.handleSubmit} 
           textAreaTextEntry = {this.state.textEntry}
           updatePersonList = {this.updatePersonList}
+          updateIgnorePerson = {this.updateIgnorePerson}
           />
         <div className = "TransactionList">
           {this.getEntriesFromParseString(this.data)}

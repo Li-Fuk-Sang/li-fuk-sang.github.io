@@ -33,8 +33,8 @@
 .name-entry {
     display: flex;
     flex-direction: row;
-    margin-bottom: 20px;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .name-entry textarea {
@@ -68,8 +68,17 @@
     margin-left: 5px;
 }
 
+.name-entry-prompt-ignore {
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.672);
+}
+
 .NameSelector{
     width: 63vw;
     max-width: 500px;
     margin-bottom: 20px ;
+}
+
+.name-selector-ignore .name-entry button {
+    background-color: rgb(255, 130, 130); 
 }

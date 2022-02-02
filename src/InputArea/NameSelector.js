@@ -73,26 +73,56 @@ class NameSelector extends React.Component{
     }
 
     render(){
-        return(
-            <div className = "NameSelector">
-                <div className = "name-entry-prompt">
-                    Enter names to look for: 
+        //Indicated whether this entry is for entering ignore person
+        if(this.props.isIgnore){
+            return(
+                <div className = "NameSelector name-selector-ignore">
+                    <div className = "name-entry-prompt name-entry-prompt-ignore">
+                        The following names will be ignored from all transcations. <br></br>
+                        i.e. They did not use any of the ledger items. <br></br>
+                        You can still add their names back to individual entries later. <br></br>
+                    </div>
+                    <div className = "name-entry-prompt">
+                        Enter the names to ignore:
+                    </div>
+                    <div className="name-entry">
+                        <textarea onChange = {this.handleTextAreaChange} value = {this.state.textAreaText} onKeyDown={this.handleEnterKey}></textarea>
+                        <button className = "ledger-button" onClick = {this.handlePersonAdd}><span>+</span></button>
+                    </div>
+                    <div className="new-name-list">
+                        {
+                            this.state.personList.map((personName) => {
+                                return(
+                                    <NewPerson newPersonName = {personName} removeThis = {this.removePerson}></NewPerson>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-                <div className="name-entry">
-                    <textarea onChange = {this.handleTextAreaChange} value = {this.state.textAreaText} onKeyDown={this.handleEnterKey}></textarea>
-                    <button className = "ledger-button" onClick = {this.handlePersonAdd}><span>+</span></button>
+            )
+        } else {
+            return(
+                <div className = "NameSelector">
+                    <div className = "name-entry-prompt">
+                        Enter the names to look for:
+                    </div>
+                    <div className="name-entry">
+                        <textarea onChange = {this.handleTextAreaChange} value = {this.state.textAreaText} onKeyDown={this.handleEnterKey}></textarea>
+                        <button className = "ledger-button" onClick = {this.handlePersonAdd}><span>+</span></button>
+                    </div>
+                    <div className="new-name-list">
+                        {
+                            this.state.personList.map((personName) => {
+                                return(
+                                    <NewPerson newPersonName = {personName} removeThis = {this.removePerson}></NewPerson>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-                <div className="new-name-list">
-                    {
-                        this.state.personList.map((personName) => {
-                            return(
-                                <NewPerson newPersonName = {personName} removeThis = {this.removePerson}></NewPerson>
-                            )
-                        })
-                    }
-                </div>
-            </div>
-        )
+            )
+        }
+        
     }
 
 }

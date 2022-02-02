@@ -31,9 +31,14 @@ class Entry extends React.Component{
 
     /**
      * MODIFY DEFAULT BEHAVIOR HERE
+     * The function removes a person from the entry on load
+     * Used when a person should be ignored from all entry
      */
     componentDidMount(){
-        
+        //REFACTOR: Put this function in ParseString for better performance
+        for(let person of this.props.ignorePerson){
+            this.removeUser(person); 
+        }
     }
 
     render(){

@@ -32,3 +32,7 @@
     border-left: 1px solid rgb(174, 174, 174);
 }
 
+.name-selector-ignore .new-person{
+    background-color: rgb(255, 220, 220);
+}
+

@@ -10,7 +10,8 @@ class InputArea extends React.Component{
     render(){
         return(
             <div className = "MainTextAreaDiv">
-                <NameSelector updatePersonList = {this.props.updatePersonList}/>    
+                <NameSelector updatePersonList = {this.props.updatePersonList} isIgnore = {false}/>    
+                <NameSelector updatePersonList = {this.props.updateIgnorePerson} isIgnore = {true}/>   
                 <div className="main-text-area">
                     <div className = "main-text-area-prompt">
                         Copy and Paste transcation record here: 
