@@ -12,7 +12,7 @@ class InputArea extends React.Component{
             <div className = "MainTextAreaDiv">
                 <textarea className = "MainTextArea" value = {this.props.textAreaTextEntry} onChange = {this.props.handleTextAreaChange}></textarea>
                     <NameSelector updatePersonList = {this.props.updatePersonList}/>
-                <button className = "SubmitButton" onClick = {this.props.handleSubmit}>Submit</button>
+                <button className = "SubmitButton ledger-button" onClick = {this.props.handleSubmit}>Submit</button>
             </div>
         )
     } 

@@ -14,6 +14,7 @@ class NameSelector extends React.Component{
         this.handlePersonAdd = this.handlePersonAdd.bind(this); 
         this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
         this.removePerson = this.removePerson.bind(this);
+        this.handleEnterKey = this.handleEnterKey.bind(this);
     }
 
     /**
@@ -34,6 +35,13 @@ class NameSelector extends React.Component{
                 //Updating the outer app state.
                 this.props.updatePersonList(this.state.personList);
             })
+        }
+    }
+
+    handleEnterKey(e){
+        if(e.keyCode == 13){
+            e.preventDefault(); 
+            this.handlePersonAdd(); 
         }
     }
 
@@ -67,15 +75,19 @@ class NameSelector extends React.Component{
     render(){
         return(
             <div className = "NameSelector">
-                <textarea onChange = {this.handleTextAreaChange} value = {this.state.textAreaText}></textarea>
-                <button onClick = {this.handlePersonAdd}>+</button>
-                {
-                    this.state.personList.map((personName) => {
-                        return(
-                            <NewPerson newPersonName = {personName} removeThis = {this.removePerson}></NewPerson>
-                        )
-                    })
-                }
+                <div className="name-entry">
+                    <textarea onChange = {this.handleTextAreaChange} value = {this.state.textAreaText} onKeyDown={this.handleEnterKey}></textarea>
+                    <button className = "ledger-button" onClick = {this.handlePersonAdd}><span>+</span></button>
+                </div>
+                <div className="new-name-list">
+                    {
+                        this.state.personList.map((personName) => {
+                            return(
+                                <NewPerson newPersonName = {personName} removeThis = {this.removePerson}></NewPerson>
+                            )
+                        })
+                    }
+                </div>
             </div>
         )
     }

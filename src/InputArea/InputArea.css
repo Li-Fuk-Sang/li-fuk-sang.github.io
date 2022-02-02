@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+
 .MainTextAreaDiv{
     display: flex;
     flex-direction: column;
@@ -7,13 +9,54 @@
 
 .MainTextArea{
     display: block;
-    width: 500px; 
+    width: 80vw;
+    max-width: 600px;
+    height: 300px;
     margin-bottom: 20px;
+    border-radius: 10px;
+    resize: none;
 }
 
 .SubmitButton{
     width: 100px;
     height: 30px;
     border-radius: 20px;
-    border: none;
+}
+
+.name-entry {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.name-entry textarea {
+    resize: none;
+    border-radius: 34px;
+    margin-right: 19px;
+    padding-top: 10px;
+    padding-left: 22px;
+    font-size: 1.1em;
+    height: 30px;
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+}
+
+.name-entry button {
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    background-color: #72cc50;
+    color: white;
+    font-size: 1.5em;
+}
+
+.name-entry button:hover{
+    background-color: rgba(114, 205, 81, 0.672);
+}
+
+.NameSelector{
+    width: 63vw;
+    max-width: 500px;
+    margin-bottom: 20px ;
 }

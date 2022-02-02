@@ -4,6 +4,7 @@ import './NameTag.css';
 import './Individual.css';
 import './AppHeader.css';
 import './InputArea/InputArea.css';
+import "./InputArea/NewPerson.css"
 import Entry from './Entry';
 import PersonalTranscations from './PersonalTranscation';
 import * as Parse from "./ParseString"; 

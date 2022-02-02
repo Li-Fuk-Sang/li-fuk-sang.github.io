@@ -13,8 +13,8 @@ class NewPerson extends React.Component{
 
     render(){
         return(
-            <div className = "newPerson">
-                <div>{this.props.newPersonName}</div>
+            <div className = "new-person">
+                <div className='new-person-name'><span>{this.props.newPersonName}</span></div>
                 <button onClick = {this.removeThis}>X</button>
             </div>
         )
