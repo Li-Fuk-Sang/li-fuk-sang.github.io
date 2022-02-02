@@ -1,0 +1,19 @@
+.MainTextAreaDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.MainTextArea{
+    display: block;
+    width: 500px; 
+    margin-bottom: 20px;
+}
+
+.SubmitButton{
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+}

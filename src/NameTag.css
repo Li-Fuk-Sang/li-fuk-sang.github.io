@@ -6,7 +6,19 @@
 }
 
 .NameTag {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(118, 162, 255);
+    margin: 0px 3px;
+    border-radius: 3px;
+    width: 75px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AddTag {
+    background-color: rgb(182, 182, 182);
     margin: 0px 3px;
     border-radius: 3px;
     width: 75px;
@@ -19,6 +31,11 @@
 
 .NameTagName {
     margin: auto;
+}
+
+.AddTagName {
+    margin: auto;
+    color: rgb(145, 145, 145);
 }
 
 .NameTag > button {

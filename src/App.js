@@ -2,84 +2,13 @@ import React from 'react';
 import './App.css';
 import './NameTag.css';
 import './Individual.css';
+import './AppHeader.css';
+import './InputArea/InputArea.css';
 import Entry from './Entry';
 import PersonalTranscations from './PersonalTranscation';
 import * as Parse from "./ParseString"; 
-
-// class Person{
-//   constructor(data, name){
-//     this.name = name; 
-//     this.finaStatement = [];
-//     this.balance = 0;
-
-//     //Initalize person class with given data
-//     //Calculate balance as well
-//     this.addArrTransaction(data);
-//   }
-
-//   calculateBalance(){
-//     this.balance = 0; 
-//     for(let i = 0; i < this.finaStatement.length; i++){
-//       if(this.finaStatement[i] === 'A'){
-//         this.balance += this.finaStatement[i].amount;
-//       }
-//       else{
-//         this.balance -= this.finaStatement[i].amount;
-//       }
-//     }
-//   }
-
-//   addArrTransaction(data){
-//     for(let i = 0; i < data.length; i++){
-//       if(data[i].owner === this.name){
-//         this.finaStatement.push({
-//           transactionName: data[i].name,
-//           amount: data[i].amount,
-//           type: "A",
-//         })
-//       }
-//       //Check user 0
-//       if(data[i].user.includes(this.name)){
-//         this.finaStatement.push({
-//           transactionName: data[i].name,
-//           amount: data[i].amount/data[i].user.length,
-//           type: "L",
-//         })
-//       }
-//     }
-//     this.calculateBalance();
-//   }
-
-//   addOneTransaction(data){
-//     if(data.owner === this.name){
-//       this.finaStatement.push({
-//         transactionName: data.name,
-//         amount: data.amount,
-//         type: "A",
-//       })
-//     }
-//     //Check user 0
-//     if(data.user.includes(this.name)){
-//       this.finaStatement.push({
-//         transactionName: data.name,
-//         amount: data.amount/data.user.length,
-//         type: "L",
-//       })
-//     }
-//   }
-
-//   debug(){
-//     console.log("Name: " + this.name);
-//     console.log("Balance: " + this.balance);
-//     console.log("Financial Statement");
-//     for(let i = 0; i < this.finaStatement.length; i++){
-//       console.log("==Transaction " + i + "==");
-//       console.log("Transaction Name: " + this.finaStatement[i].transactionName); 
-//       console.log("Transaction Amount: " + this.finaStatement[i].amount);
-//     }
-//   }
-
-// }
+import InputArea from './InputArea/InputArea';
+import Title from './AppTitle';
 
 class App extends React.Component{
 
@@ -88,14 +17,14 @@ class App extends React.Component{
     this.keyCount = 0;  //Redun?
     this.personList = ["Fox", "Tommy", "Rex"];
     this.state = {
-      personList : ["Fox", "Tommy", "Rex", "Stardust", "Jacky", "Kin", "Arnold"],     //To be gathered from parse string later
+      personList : [],     //PersonList is created by Update Person List
       data: [],
       finaStatement: [],    //?
       textEntry: "",
     }
 
     //Adding unique keys to the objects
-
+    this.updatePersonList = this.updatePersonList.bind(this); 
     this.getListFromData = this.getEntriesFromParseString.bind(this);
     this.removeData = this.removeData.bind(this); 
     this.updateFinaStatement = this.updateFinaStatement.bind(this);
@@ -103,11 +32,25 @@ class App extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fromTransactionsToStatement = this.fromTransactionsToStatement.bind(this);
     this.removePersonUsed = this.removePersonUsed.bind(this);
+    this.addPersonUsed = this.addPersonUsed.bind(this); 
+    
   }
 
   handleTextAreaChange(ev) { this.setState(
     {textEntry: ev.target.value}
   )}
+
+  /**
+   * Passed down to `handlePersonAdd()` of name selector
+   * Updates the person list of app state. 
+   * @param {List} newPersonList 
+   */
+  updatePersonList(newPersonList) {
+    console.log(newPersonList);
+    this.setState(
+      {personList: newPersonList}
+    );
+  }
 
   handleSubmit() {
     let temp; 
@@ -122,7 +65,7 @@ class App extends React.Component{
     this.setState(
         {data: temp}
     );
-    console.log(temp);
+    //console.log(temp);
   }
 
   getEntriesFromParseString(){
@@ -130,7 +73,7 @@ class App extends React.Component{
     let list = this.state.data.map((data)=>{
       //this.keyCount++;
       entryNum++; 
-      return(<Entry data = {data} key = {data.key} numKey = {data.key} entryNum = {entryNum} removeData = {this.removeData} removePersonUsed = {this.removePersonUsed}/>)
+      return(<Entry data = {data} key = {data.key} validPersonList = {this.state.personList} numKey = {data.key} entryNum = {entryNum} removeData = {this.removeData} removePersonUsed = {this.removePersonUsed} addPersonUsed = {this.addPersonUsed}/>)
     })
     return list; 
   }
@@ -205,23 +148,20 @@ class App extends React.Component{
 
   /**
    * Removes a person from the User List of an entry
+   * This function modifies the "data" field of the state
    * @param {num} key 
    * @param {String} personName 
    */
   removePersonUsed(key, personName){
-    //console.log("Got personName: " + personName); 
     this.setState(
       function(state) {
         let temp = state.data;
-        //console.log(state.data);
         for (let data of temp){
           //Find the Entry to be modified
-          //console.log(data);
           if(data.key === key){
             //Located entry to be modified
             //Now find the person to be removed
             for(let i = 0; i < data.personsUsedItem.length; i++){
-              //console.log(data.personsUsedItem[i]);
               if(data.personsUsedItem[i] === personName){
                 let tempArr = [];
                 for(let j = 0; j < data.personsUsedItem.length; j++){
@@ -230,27 +170,57 @@ class App extends React.Component{
                   }
                 }
                 data.personsUsedItem = tempArr; 
-                //console.log(temp);
                 return {
                   data: temp
                 }; 
               }
             }
-            //alert("ERROR: This person does not exist in the data PersonUsedItem Array")
           }
         }
-        //alert("ERROR: The entry with the specified key does not exist")
       }
     )
-        
   }
 
+  /**
+   * Adds a person from the User List of an entry
+   * This function modifies the "data" field of the state
+   * @param {num} key 
+   * @param {String} personName 
+   */
+  addPersonUsed(key, personName){
+    this.setState(
+      function(state) {
+        let temp = state.data;
+        for (let data of temp){
+          //Find the Entry to be modified
+          if(data.key === key){
+            if(data.personsUsedItem.includes(personName)){
+            } else {
+              data.personsUsedItem.push(personName); 
+              break; 
+            }
+          }
+        }
+        return {
+          data: temp
+        }
+      }
+    )
+  }
+
+  // <textarea value = {this.state.textEntry} onChange = {this.handleTextAreaChange}></textarea>
+  // <button onClick = {this.handleSubmit}>Submit</button>
+
   render(){
-    //console.log(this.state.data);
     return(
       <div className = "app">
-        <textarea value = {this.state.textEntry} onChange = {this.handleTextAreaChange}></textarea>
-        <button onClick = {this.handleSubmit}>Submit</button>
+        <Title/>
+        <InputArea 
+          handleTextAreaChange = {this.handleTextAreaChange} 
+          handleSubmit = {this.handleSubmit} 
+          textAreaTextEntry = {this.state.textEntry}
+          updatePersonList = {this.updatePersonList}
+          />
         <div className = "TransactionList">
           {this.getEntriesFromParseString(this.data)}
         </div>

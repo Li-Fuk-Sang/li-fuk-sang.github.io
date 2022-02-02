@@ -1,4 +1,5 @@
 import React from "react";
+import Addtag from "./Addtag";
 import Nametag from "./Nametag";
 
 class Entry extends React.Component{
@@ -12,6 +13,7 @@ class Entry extends React.Component{
         }
         this.handleRemove = this.handleRemove.bind(this);
         this.removeUser = this.removeUser.bind(this);
+        this.addUser = this.addUser.bind(this);
     }
 
     handleRemove() {
@@ -24,7 +26,21 @@ class Entry extends React.Component{
         this.props.removePersonUsed(this.props.numKey, personName);
     }
 
+    addUser(personName){
+        this.props.addPersonUsed(this.props.numKey, personName);
+    }
+
+    /**
+     * MODIFY DEFAULT BEHAVIOR HERE
+     */
+    componentDidMount(){
+        this.removeUser("Kin"); 
+        this.removeUser("Stardust");
+        this.removeUser("Arnold");
+    }
+
     render(){
+        let remain = this.props.validPersonList.slice(); 
         return(
             <div className = "TransactionEntry" owner = {this.state.personPaid}>
                 <div className = "UpperBox">
@@ -35,8 +51,16 @@ class Entry extends React.Component{
                     <div className = "PersonUsed">
                     {
                         this.props.data.personsUsedItem.map((user)=>{
+                            remain = remain.filter(name => name !== user); 
                             return (
                                 <Nametag personName = {user} remove = {this.removeUser}/>
+                            )
+                        })
+                    }
+                    {
+                        remain.map((user)=>{
+                            return (
+                                <Addtag personName = {user} add = {this.addUser} />
                             )
                         })
                     }
