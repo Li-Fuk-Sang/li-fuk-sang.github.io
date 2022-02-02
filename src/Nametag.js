@@ -13,9 +13,11 @@ class Nametag extends React.Component{
 
     render(){
         return(
-            <div className="NameTag">
-                <div className = "NameTagName">{this.props.personName}</div>
-                <button className = "RemoveNameTagButton" onClick = {this.removeThis}>X</button>
+            <div className="name-tag">
+                <div className = "name-tag-name">
+                    {this.props.personName}
+                </div>
+                <button className = "name-tag-remove-button" onClick = {this.removeThis}>X</button>
             </div>
         )
     }

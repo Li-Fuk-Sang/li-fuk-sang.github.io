@@ -225,7 +225,7 @@ class App extends React.Component{
         <div className = "TransactionList">
           {this.getEntriesFromParseString(this.data)}
         </div>
-        <button onClick = {this.updateFinaStatement}>UPDATE</button>
+        <button className = "ledger-button update-button" onClick = {this.updateFinaStatement}>UPDATE</button>
         <div className = "FinaStatements">
           {this.state.finaStatement}
         </div>

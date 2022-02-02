@@ -10,8 +10,13 @@ class InputArea extends React.Component{
     render(){
         return(
             <div className = "MainTextAreaDiv">
-                <textarea className = "MainTextArea" value = {this.props.textAreaTextEntry} onChange = {this.props.handleTextAreaChange}></textarea>
-                    <NameSelector updatePersonList = {this.props.updatePersonList}/>
+                <NameSelector updatePersonList = {this.props.updatePersonList}/>    
+                <div className="main-text-area">
+                    <div className = "main-text-area-prompt">
+                        Copy and Paste transcation record here: 
+                    </div>
+                    <textarea className = "MainTextArea" value = {this.props.textAreaTextEntry} onChange = {this.props.handleTextAreaChange}></textarea>
+                </div>
                 <button className = "SubmitButton ledger-button" onClick = {this.props.handleSubmit}>Submit</button>
             </div>
         )

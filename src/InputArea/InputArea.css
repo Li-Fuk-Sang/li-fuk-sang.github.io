@@ -12,9 +12,16 @@
     width: 80vw;
     max-width: 600px;
     height: 300px;
+    padding-top: 10px;
     margin-bottom: 20px;
     border-radius: 10px;
     resize: none;
+}
+
+.main-text-area-prompt{
+    margin-left: 5px; 
+    margin-bottom: 5px;
+    font-family: 'Lato', sans-serif;
 }
 
 .SubmitButton{
@@ -53,6 +60,12 @@
 
 .name-entry button:hover{
     background-color: rgba(114, 205, 81, 0.672);
+}
+
+.name-entry-prompt {
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 5px;
+    margin-left: 5px;
 }
 
 .NameSelector{

@@ -75,6 +75,9 @@ class NameSelector extends React.Component{
     render(){
         return(
             <div className = "NameSelector">
+                <div className = "name-entry-prompt">
+                    Enter names to look for: 
+                </div>
                 <div className="name-entry">
                     <textarea onChange = {this.handleTextAreaChange} value = {this.state.textAreaText} onKeyDown={this.handleEnterKey}></textarea>
                     <button className = "ledger-button" onClick = {this.handlePersonAdd}><span>+</span></button>

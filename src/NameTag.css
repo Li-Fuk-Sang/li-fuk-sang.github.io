@@ -1,36 +1,47 @@
 .PersonUsed {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-right: 20px;
+    gap: 4px
 }
 
-.NameTag {
+.name-tag {
     background-color: rgb(118, 162, 255);
-    margin: 0px 3px;
-    border-radius: 3px;
+    border-radius: 5px;
     width: 75px;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 }
 
 .AddTag {
     background-color: rgb(182, 182, 182);
-    margin: 0px 3px;
     border-radius: 3px;
     width: 75px;
+    border: none;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    transition: 0.1s;
+    cursor: pointer;
 }
 
-.NameTagName {
-    margin: auto;
+.AddTag:hover{
+    background-color: rgb(208, 208, 208);
+    transition: 0.1s;
+}
+
+.name-tag-name {
+    margin: 2px auto;
+    font-size: 0.8em;
 }
 
 .AddTagName {
@@ -38,9 +49,18 @@
     color: rgb(145, 145, 145);
 }
 
-.NameTag > button {
+.name-tag-remove-button {
     border-style: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.227);
     background-color: rgba(109, 63, 63, 0);
-    padding-left: 2px;
+    padding-left: 4px;
     padding-right: 4px;
+    cursor: pointer;
+    height: 100%;
+}
+
+.name-tag-remove-button:hover{
+    background-color: rgba(255, 255, 255, 0.364);
+    color: white;
+    transition: 0.1s;
 }

@@ -22,7 +22,6 @@ class Entry extends React.Component{
     }
 
     removeUser(personName){
-        console.log("Key is: " +  this.props.numKey);
         this.props.removePersonUsed(this.props.numKey, personName);
     }
 
@@ -34,15 +33,13 @@ class Entry extends React.Component{
      * MODIFY DEFAULT BEHAVIOR HERE
      */
     componentDidMount(){
-        this.removeUser("Kin"); 
-        this.removeUser("Stardust");
-        this.removeUser("Arnold");
+        
     }
 
     render(){
         let remain = this.props.validPersonList.slice(); 
         return(
-            <div className = "TransactionEntry" owner = {this.state.personPaid}>
+            <div className = "transaction-entry" owner = {this.state.personPaid}>
                 <div className = "UpperBox">
                     <div className = "TitleAndOwner">
                         <div className = "EntryName">Item {this.props.entryNum}: <a>{this.state.transactionName}</a></div>
