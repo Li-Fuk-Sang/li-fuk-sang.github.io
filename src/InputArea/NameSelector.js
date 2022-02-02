@@ -17,13 +17,11 @@ class NameSelector extends React.Component{
     }
 
     /**
-     * This function will fire when the user clicks on the "+" button
-     * The value of the text area will be taken and added to the personList of the this.state
+     * This function add the name in the name input to both the name selector state and the app state. 
+     * This function is triggered every time the + button is added.
      */
     handlePersonAdd(){
-
         let name = this.state.textAreaText;
-
         if(this.state.personList.includes(name.toUpperCase())){
             alert("Person to add already exist.");
         } else {
@@ -32,8 +30,10 @@ class NameSelector extends React.Component{
                     textAreaText: "", 
                     data: state.personList.push(name.toUpperCase()) 
                 };
+            }, () => {
+                //Updating the outer app state.
+                this.props.updatePersonList(this.state.personList);
             })
-            this.props.updatePersonList(this.state.personList);
         }
     }
 
@@ -41,6 +41,13 @@ class NameSelector extends React.Component{
         {textAreaText: ev.target.value}
     )}
 
+    /**
+     * Removes a person by string. 
+     * 
+     * This function removes a person from the name selector state, as well as the outer app state. 
+     * This function is passed down to NewPerson, and triggered when the "X" button is pressed. 
+     * @param {string} personName 
+     */
     removePerson(personName){
         this.setState(
           function(state) {
@@ -48,12 +55,13 @@ class NameSelector extends React.Component{
             let filtered = originalPersonList.filter(function(name){
                 return name !== personName;
             })
+            //Updating the outer app state. 
+            this.props.updatePersonList(filtered);
             return(
                 {personList: filtered}
             )
           }
         )
-        this.props.updatePersonList(this.state.personList);
     }
 
     render(){
